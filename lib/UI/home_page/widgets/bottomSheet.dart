@@ -132,34 +132,6 @@ class _TransferBottomSheetState extends State<TransferBottomSheet> {
                           label: "TRANSFER   \$ ${currentValue.toInt()}",
                           textColor: Colors.black,
                         ),
-                        // TextButton(
-                        //   onPressed: () {},
-                        //   child: Center(
-                        //       child: Text(
-                        //     "TRANSFER \$${currentValue.toInt()}",
-                        //     style: TextStyle(
-                        //       color: Colors.black,
-                        //       letterSpacing: 0.01,
-                        //       fontSize: 18.0.sp,
-                        //     ),
-                        //   )),
-                        //   style: ButtonStyle(
-                        //     backgroundColor: MaterialStateProperty.all(
-                        //       AppColors.primaryColor,
-                        //     ),
-                        //     shape: MaterialStateProperty.all<
-                        //         RoundedRectangleBorder>(
-                        //       RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.circular(18.0.r),
-                        //         side: const BorderSide(
-                        //           color: Colors.amberAccent,
-                        //           width: 2.0,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     elevation: MaterialStateProperty.all(2.0),
-                        //   ),
-                        // ),
                       ),
                     ),
                   ],
