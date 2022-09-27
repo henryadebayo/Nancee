@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../Utils/App_colors/app_color_file.dart';
 import '../actions_page/action_screen.dart';
-import '../history_page/history_page.dart';
+import '../history_page/history_screen.dart';
 import '../home_page/home_screen.dart';
 import '../profile_page/profilr_screen.dart';
 
@@ -17,7 +17,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const HomeScreen(),
+    HomeScreen(),
     const ActionScreen(),
     const HistoryScreen(),
     const ProfileScreen(),
