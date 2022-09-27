@@ -10,8 +10,7 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case "/bottomNav":
-        return MaterialPageRoute(
-            builder: (_) => const BottomNavigationScreen());
+        return MaterialPageRoute(builder: (_) => const BottomNavigation());
 
       case "/signUp":
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
