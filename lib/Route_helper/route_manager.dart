@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nannce/UI/bottom_navigation_page/bottom_navigation_screen.dart';
 
 import '../UI/auth_page/sign_in_page.dart';
 import '../UI/auth_page/sign_up_screen.dart';
@@ -9,7 +10,8 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case "/bottomNav":
-        return MaterialPageRoute(builder: (_) => const BottomNavigation());
+        return MaterialPageRoute(
+            builder: (_) => const BottomNavigationScreen());
 
       case "/signUp":
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
