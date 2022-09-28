@@ -64,12 +64,6 @@ class _TransferBottomSheetState extends State<TransferBottomSheet> {
                         decoration: InputDecoration(
                           hintText: "Input Receivers account number",
                           focusColor: Colors.white,
-                          //add prefix icon
-                          // prefixIcon: Icon(
-                          //   Icons.person_outline_rounded,
-                          //   color: Colors.grey,
-                          // ),
-                          //errorText: "Error",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
