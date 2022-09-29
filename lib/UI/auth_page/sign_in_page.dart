@@ -22,19 +22,19 @@ class _SignInScreenState extends State<SignInScreen> {
   late final String email;
   late final String password;
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body:
-          BlocConsumer<SignInBloc, AuthSignInState>(listener: (context, state) {
+      body: BlocConsumer<SignInBloc, SignInState>(listener: (context, state) {
         if (state is SignInError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: AppColors.primaryColor,
               content: Text(
                 state.errorMsg!,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               action: SnackBarAction(
                 label: "Dismiss",
@@ -55,7 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Center(child: CustomLoader(label: "Creating Account"))),
           );
         }
-        if (state is SignedIn) {
+        if (state is SignInSuccessful) {
           return const Center(
             child: Text(
               "home screen",
@@ -93,13 +93,19 @@ class _SignInScreenState extends State<SignInScreen> {
                               height: 20.0.h,
                             ),
                             CustomTextForm(
-                              label: "Email",
-                              autofill: AutofillHints.email,
-                              onChanged: (value) {},
+                              keyboardType: TextInputType.number,
+                              label: "Input Phone Number",
+                              autofill: AutofillHints.name,
+                              onChanged: (value) {
+                                newUser.phoneNumber = value;
+                              },
                               validator: (value) {
-                                if (value.isEmpty ||
-                                    !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                                  return "Please Enter a valid Last Name";
+                                if (value.isEmpty
+                                    // ||
+                                    // !RegExp(r'^[a-z A-Z]+$')
+                                    //     .hasMatch(value)
+                                    ) {
+                                  return "Phone Number is required ";
                                 }
                                 return null;
                               },

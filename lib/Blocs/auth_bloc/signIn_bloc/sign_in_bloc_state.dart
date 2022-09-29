@@ -1,18 +1,18 @@
 part of 'sign_in_bloc_bloc.dart';
 
 @immutable
-abstract class AuthSignInState {}
+abstract class SignInState {}
 
-class SignInInitial extends AuthSignInState {}
+class SignInInitial extends SignInState {}
 
-class SignInLoading extends AuthSignInState {}
+class SignInLoading extends SignInState {}
 
-class SignedIn extends AuthSignInState {
+class SignInSuccessful extends SignInState {
   var user;
-  SignedIn({required this.user});
+  SignInSuccessful({required this.user});
 }
 
-class SignInError extends AuthSignInState {
+class SignInError extends SignInState {
   final String? errorMsg;
   SignInError({this.errorMsg});
 }

@@ -38,36 +38,30 @@ class AuthServices {
     }
   }
 
-  Future<dynamic> signIn(String email, String password) async {
-    try {
-      final Map<String, dynamic> userData = {
-        "email": email,
-        "password": password,
-      };
-      http.Response response = await http.post(
-        Uri.parse('$BaseUrl/auth/login'),
-        headers: {HttpHeaders.contentTypeHeader: "application/json"},
-        body: json.encode(userData),
-      );
-      print(response.body);
-      var res = jsonDecode(response.body);
-      if (response.statusCode == 200) {
-        final res = jsonDecode(response.body);
-        final user = UserModel.fromJson(res["data"]["user"]);
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString('user', json.encode(user.toJson()));
-        print("THIS IS LOG IN USER PREFS ::: ${prefs.toString()}");
-        print("THIS IS SIGN IN RESPONSE BODY${response.body}");
-        return user;
-      } else {
-        print(
-            "error signing In and response status code is ${response.statusCode}");
-        final res = jsonDecode(response.body);
-        print("THIS IS SINNNN ERROR::::::: ${res["message"]}");
-        return res;
-      }
-    } catch (e) {
-      print("This is SIGN IN ERROR ${e}");
+  Future<UserModel?>? signIn(String email, String password) async {
+    final Map<String, dynamic> userData = {
+      "email": email,
+      "password": password,
+    };
+    http.Response response = await http.post(
+      Uri.parse('$BaseUrl/auth/login'),
+      headers: {HttpHeaders.contentTypeHeader: "application/json"},
+      body: json.encode(userData),
+    );
+    print(response.body);
+    var res = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      final res = jsonDecode(response.body);
+      final user = UserModel.fromJson(res["data"]["user"]);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('user', json.encode(user.toJson()));
+      print("THIS IS LOG IN USER PREFS ::: ${prefs.toString()}");
+      print("THIS IS SIGN IN RESPONSE BODY${response.body}");
+      return user;
+    } else {
+      final res = jsonDecode(response.body);
+      print("THIS IS SINNNN ERROR::::::: ${res["message"]}");
+      throw res["message"];
     }
   }
 

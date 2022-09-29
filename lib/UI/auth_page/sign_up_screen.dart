@@ -54,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
         }
         if (state is SignedUpSuccessful) {
-          return Center(
+          return const Center(
             child: Text(
               "home screen",
               style: TextStyle(color: Colors.white),
