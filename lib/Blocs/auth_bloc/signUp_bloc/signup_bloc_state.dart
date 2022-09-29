@@ -1,18 +1,18 @@
 part of 'signup_bloc_bloc.dart';
 
 @immutable
-abstract class SignupBlocState {}
+abstract class SignUpBlocState {}
 
-class SignupBlocInitial extends SignupBlocState {}
+class SignupBlocInitial extends SignUpBlocState {}
 
-class SignUpLoading extends SignupBlocState {}
+class SignUpLoading extends SignUpBlocState {}
 
-class SignedUpSuccessful extends SignupBlocState {
-  final String? message;
-  SignedUpSuccessful({this.message});
+class SignedUpSuccessful extends SignUpBlocState {
+  final UserModel? user;
+  SignedUpSuccessful({this.user});
 }
 
-class SignedUpError extends SignupBlocState {
+class SignedUpError extends SignUpBlocState {
   final String? errorMessage;
 
   SignedUpError({this.errorMessage});

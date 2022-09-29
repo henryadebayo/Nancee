@@ -1,28 +1,26 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:nannce/Repo/models/user_model.dart';
+
+import '../../../Repo/services/auth_services.dart';
 
 part 'signup_bloc_event.dart';
 part 'signup_bloc_state.dart';
 
-class SignupBloc extends Bloc<SignupEvent, SignupBlocState> {
-  SignupBloc() : super(SignupBlocInitial()) {
-    on<SignupEvent>((event, emit) {
+class SignUpBloc extends Bloc<SignupEvent, SignUpBlocState> {
+  SignUpBloc() : super(SignupBlocInitial()) {
+    on<SignupEvent>((event, emit) async {
       if (event is SignUp) {
-        Register(event.email, event.password, event.firstName, event.lastName);
+        try {
+          emit(SignUpLoading());
+          final authServices = AuthServices();
+          final user =
+              await authServices.signUp(event.phoneNumber, event.password);
+          emit(SignedUpSuccessful(user: user));
+        } catch (e) {
+          emit(SignedUpError(errorMessage: e.toString()));
+        }
       }
     });
-  }
-  Future<SignupBlocState> Register(
-      String email, String password, String firstName, String lastName) async {
-    try {
-      emit(SignUpLoading());
-      final authServices = AuthServices();
-      final message =
-          await authServices.signUp(email, password, firstName, lastName);
-      print("THIS IS SIGN UP BLOC MESSAGE :::::${message.toString()}");
-      return (SignedUpSuccessful(message: message));
-    } catch (e) {
-      return (SignedUpError(errorMessage: e.toString()));
-    }
   }
 }

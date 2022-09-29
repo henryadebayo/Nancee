@@ -4,24 +4,22 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Utils/const.dart';
+import '../models/user_model.dart';
+
 class AuthServices {
   final UserModel userModel = UserModel();
   late String responseBody;
   late String responseBody2;
-  late String signUp_msg;
-  late String signIn_msg;
 
-  Future<dynamic> signUp(
-      String email, String password, String firstName, String lastName) async {
+  Future<dynamic> signUp(String phoneNumber, String password) async {
     try {
       final Map<String, dynamic> userData = {
-        "email": email,
-        "password": password,
-        "firstName": firstName,
-        "lastName": lastName,
+        "phoneNumber": phoneNumber,
+        "password": password
       };
       http.Response response = await http.post(
-        Uri.parse("https://sportive-23.herokuapp.com/api/v1/auth/signup"),
+        Uri.parse("$BaseUrl/auth/signup"),
         headers: {HttpHeaders.contentTypeHeader: "application/json"},
         body: json.encode(userData),
       );
@@ -29,17 +27,15 @@ class AuthServices {
 
       if (response.statusCode == 200) {
         print("signed up successfully");
-        print("THis is Sign up response.body ${response.body}");
+        print("This is Sign up response.body ${response.body}");
         var res = jsonDecode(response.body);
-        signUp_msg = res["message"];
-        return signUp_msg;
+        return res;
       } else {
         print(
             "error signing up and response status code is ${response.statusCode}");
         print(json.encode(userData));
         var res = jsonDecode(response.body);
-        signUp_msg = res["message"];
-        return signUp_msg;
+        throw res["message"];
       }
     } catch (e) {
       print(e);
@@ -53,7 +49,7 @@ class AuthServices {
         "password": password,
       };
       http.Response response = await http.post(
-        Uri.parse('$baseUrl/login'),
+        Uri.parse('$BaseUrl/auth/login'),
         headers: {HttpHeaders.contentTypeHeader: "application/json"},
         body: json.encode(userData),
       );
@@ -87,11 +83,9 @@ class AuthServices {
         print(
             "error signing In and response status code is ${response.statusCode}");
         final res = jsonDecode(response.body);
-        signIn_msg = res["message"].toString();
-        print("THIS IS SINNNN ERROR::::::: ${signIn_msg}");
-        return signIn_msg;
+        print("THIS IS SINNNN ERROR::::::: ${res["message"]}");
+        return res;
       }
-      return res["message"];
     } catch (e) {
       print("This is SIGN IN ERROR ${e}");
     }
@@ -101,7 +95,7 @@ class AuthServices {
     final prefs = await SharedPreferences.getInstance();
     final userJson = prefs.get('user');
     if (userJson != null) {
-      var jsonUser = jsonDecode(userJson);
+      var jsonUser = json.decode(userJson.toString());
       var user = UserModel.fromJson(jsonUser);
       return user;
     } else {
