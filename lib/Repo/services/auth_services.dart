@@ -12,33 +12,29 @@ class AuthServices {
   late String responseBody;
   late String responseBody2;
 
-  Future<dynamic> signUp(String phoneNumber, String password) async {
-    try {
-      final Map<String, dynamic> userData = {
-        "phoneNumber": phoneNumber,
-        "password": password
-      };
-      http.Response response = await http.post(
-        Uri.parse("$BaseUrl/auth/signup"),
-        headers: {HttpHeaders.contentTypeHeader: "application/json"},
-        body: json.encode(userData),
-      );
-      print(response.body.toString());
+  Future<UserModel?>? signUp(String phoneNumber, String password) async {
+    final Map<String, dynamic> userData = {
+      "phoneNumber": phoneNumber,
+      "password": password
+    };
+    http.Response response = await http.post(
+      Uri.parse("$BaseUrl/auth/signup"),
+      headers: {HttpHeaders.contentTypeHeader: "application/json"},
+      body: json.encode(userData),
+    );
+    print(response.body.toString());
 
-      if (response.statusCode == 200) {
-        print("signed up successfully");
-        print("This is Sign up response.body ${response.body}");
-        var res = jsonDecode(response.body);
-        return res;
-      } else {
-        print(
-            "error signing up and response status code is ${response.statusCode}");
-        print(json.encode(userData));
-        var res = jsonDecode(response.body);
-        throw res["message"];
-      }
-    } catch (e) {
-      print(e);
+    if (response.statusCode == 200) {
+      print("signed up successfully");
+      print("This is Sign up response.body ${response.body}");
+      var res = jsonDecode(response.body);
+      return res;
+    } else {
+      print(
+          "error signing up and response status code is ${response.statusCode}");
+      print(json.encode(userData));
+      var res = jsonDecode(response.body);
+      throw res["message"];
     }
   }
 
@@ -53,25 +49,9 @@ class AuthServices {
         headers: {HttpHeaders.contentTypeHeader: "application/json"},
         body: json.encode(userData),
       );
-      //   switch (response.statusCode) {
-      //     case 200:
-      //       _apiResponse.Data = User.fromJson(json.decode(response.body));
-      //       break;
-      //     case 401:
-      //       _apiResponse.ApiError = ApiError.fromJson(json.decode(response.body));
-      //       break;
-      //     default:
-      //       _apiResponse.ApiError = ApiError.fromJson(json.decode(response.body));
-      //       break;
-      //   }
-      // } on SocketException {
-      //   _apiResponse.ApiError = ApiError(error: "Server error. Please retry");
-      // }
       print(response.body);
       var res = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        // print("signed in successfully");
-        // print("THis is Sign up response.body ${response.body}");
         final res = jsonDecode(response.body);
         final user = UserModel.fromJson(res["data"]["user"]);
         final prefs = await SharedPreferences.getInstance();

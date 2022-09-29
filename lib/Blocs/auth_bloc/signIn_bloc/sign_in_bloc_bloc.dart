@@ -22,7 +22,8 @@ class SignInBloc extends Bloc<SignInEvent, AuthSignInState> {
         try {
           emit(SignInLoading());
           final authServices = AuthServices();
-          final user = await authServices.signIn(event.email, event.password);
+          final user =
+              await authServices.signIn(event.phoneNumber, event.password);
           print("THIS IS SIGN IN BLOC MESSAGE :::::${user}");
           emit(SignedIn(user: user));
           msg = user;
