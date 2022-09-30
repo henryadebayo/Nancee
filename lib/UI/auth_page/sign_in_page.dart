@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -95,7 +94,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             CustomTextForm(
                               keyboardType: TextInputType.number,
                               label: "Input Phone Number",
-                              autofill: AutofillHints.name,
+                              autofill: AutofillHints.telephoneNumber,
                               onChanged: (value) {
                                 newUser.phoneNumber = value;
                               },
@@ -122,8 +121,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               onChanged: (value) {
                                 newUser.passWord = value;
                               },
-                              validator: (email) => email != null &&
-                                      !EmailValidator.validate(email)
+                              validator: (email) => email == null
+                                  // &&
+                                  //     !EmailValidator.validate(email)
                                   ? "enter a valid email"
                                   : null,
                             ),
@@ -134,10 +134,11 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     CustomTextButton(
                       onSubmit: () {
-                        _formKey.currentState?.validate();
-                        context.read<SignInBloc>().add(SignIn(
-                            phoneNumber: newUser.phoneNumber!,
-                            password: newUser.passWord!));
+                        if (_formKey.currentState!.validate()) {
+                          context.read<SignInBloc>().add(SignIn(
+                              phoneNumber: newUser.phoneNumber!,
+                              password: newUser.passWord!));
+                        }
                       },
                       label: "Sign In",
                     ),
@@ -174,7 +175,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: 10.0,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed("/signUp"),
                       child: Text(
                         "Sign Up instead ?",
                         style: TextStyle(color: Colors.amber[800]),

@@ -8,8 +8,9 @@ class SignupBlocInitial extends SignUpBlocState {}
 class SignUpLoading extends SignUpBlocState {}
 
 class SignedUpSuccessful extends SignUpBlocState {
-  final UserModel? user;
-  SignedUpSuccessful({this.user});
+  final Data? userData;
+  final String? message;
+  SignedUpSuccessful({this.userData, this.message});
 }
 
 class SignedUpError extends SignUpBlocState {

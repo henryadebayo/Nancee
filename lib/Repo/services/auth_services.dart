@@ -27,7 +27,7 @@ class AuthServices {
     if (response.statusCode == 200) {
       print("signed up successfully");
       print("This is Sign up response.body ${response.body}");
-      var res = jsonDecode(response.body);
+      var res = userModelFromJson(response.body);
       return res;
     } else {
       print(
@@ -52,7 +52,7 @@ class AuthServices {
     var res = jsonDecode(response.body);
     if (response.statusCode == 200) {
       final res = jsonDecode(response.body);
-      final user = UserModel.fromJson(res["data"]["user"]);
+      final user = UserModel.fromJson(res["data"]);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('user', json.encode(user.toJson()));
       print("THIS IS LOG IN USER PREFS ::: ${prefs.toString()}");

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'Blocs/auth_bloc/signIn_bloc/sign_in_bloc_bloc.dart';
 import 'Blocs/auth_bloc/signUp_bloc/signup_bloc_bloc.dart';
 import 'Route_helper/route_manager.dart';
-import 'UI/auth_page/splash_screen.dart';
+import 'UI/bottom_navigation_page/bottom_navigation_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
           //     NewsBloc(newsServices: NewsServices())
           //       ..add(StartEvent())
           // ),
+          // ChangeNotifierProvider(create: (_) => WalletProvider());
           BlocProvider<SignUpBloc>(create: (ctx) => SignUpBloc()),
           BlocProvider<SignInBloc>(create: (ctx) => SignInBloc()),
         ],
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.amber,
           ),
           onGenerateRoute: RouteGenerator.generateRoute,
-          home: const SplashScreen(),
+          // home: const SplashScreen(),
+          home: BottomNavigation(),
         ),
       ),
       designSize: const Size(360, 690),
