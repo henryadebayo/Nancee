@@ -1,4 +1,4 @@
-part of 'account_history_bloc.dart';
+part of 'users_and_account_bloc.dart';
 
 @immutable
 abstract class AccoundHistroyEvent {}

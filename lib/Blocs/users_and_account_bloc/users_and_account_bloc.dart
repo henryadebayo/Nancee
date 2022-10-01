@@ -9,8 +9,8 @@ import '../../Repo/models/user_model.dart';
 import '../../Repo/services/get_account_list_and_users_services.dart';
 import '../../Repo/services/transaction_history_service.dart';
 
-part 'account_history_event.dart';
-part 'account_history_state.dart';
+part 'users_and_account_event.dart';
+part 'users_and_account_state.dart';
 
 class AccountHistoryBloc
     extends Bloc<AccoundHistroyEvent, AccountHistoryState> {

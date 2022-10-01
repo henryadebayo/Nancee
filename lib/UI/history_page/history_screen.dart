@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nannce/Blocs/Account_history_boc/account_history_bloc.dart';
 import 'package:nannce/UI/history_page/widgets/history_item_widget.dart';
 
+import '../../Blocs/users_and_account_bloc/users_and_account_bloc.dart';
 import '../../Utils/App_colors/app_color_file.dart';
 import '../../Utils/widgets/custom_loader.dart';
 
