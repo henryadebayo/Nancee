@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nannce/Blocs/Account_history_boc/account_history_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'Blocs/auth_bloc/signIn_bloc/sign_in_bloc_bloc.dart';
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider<SignUpBloc>(create: (ctx) => SignUpBloc()),
           BlocProvider<SignInBloc>(create: (ctx) => SignInBloc()),
+          BlocProvider<AccountHistoryBloc>(
+              create: (ctx) => AccountHistoryBloc()),
         ],
         child: MultiProvider(
           providers: [ChangeNotifierProvider(create: (_) => WalletProvider())],

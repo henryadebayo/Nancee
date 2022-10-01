@@ -6,30 +6,22 @@ import '../../Utils/const.dart';
 
 class AccountListAndUserServices {
   late String _endpoint;
-  List<UserModel> payLoadList = [];
 
   Future<List<UserModelData>?> getAccountList(
       {required GetActionType action}) async {
-    try {
-      if (action == GetActionType.ACCOUNTLIST) {
-        _endpoint = "accounts/list";
-      } else {
-        _endpoint = "auth/users";
-      }
-      http.Response response = await http.get(Uri.parse("$BaseUrl/$_endpoint"));
-      if (response.statusCode == 200) {
-        var data = userModelDataFromJson(response.body);
-        print("This is response:::::::::: ${data.toString()}");
+    if (action == GetActionType.ACCOUNTLIST) {
+      _endpoint = "accounts/list";
+    } else {
+      _endpoint = "auth/users";
+    }
+    http.Response response = await http.get(Uri.parse("$BaseUrl/$_endpoint"));
+    if (response.statusCode == 200) {
+      print("THIS IS RESPONSE :::::::::::: ${response.body}");
 
-        final List<UserModelData> payLoad = data as List<UserModelData>;
+      var data = userModelFromJson(response.body);
+      List<UserModelData>? payLoad = data!.data;
 
-        print(
-            "This is Action payload response:::::::::: ${payLoadList.toString()}");
-
-        return payLoad;
-      }
-    } catch (e) {
-      print("THIS IS GETACCOUNTLIST ERROR ${e.toString()}");
+      return payLoad;
     }
   }
 }

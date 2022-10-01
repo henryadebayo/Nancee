@@ -1,17 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HistoryItemWidget extends StatelessWidget {
-  String accountNumber;
-  String type;
-  var amount;
-
-  HistoryItemWidget({
-    required this.accountNumber,
-    required this.type,
-    required this.amount,
-    Key? key,
-  }) : super(key: key);
+class UserAccountWidget extends StatelessWidget {
+  String? accountNumber;
+  var balance;
+  UserAccountWidget({this.accountNumber, this.balance, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +23,12 @@ class HistoryItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "\$ $amount",
+            "\$ $balance",
             style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
           ),
-          Text(
-            "$type",
-            style: const TextStyle(
+          const Text(
+            "Date created",
+            style: TextStyle(
               color: Colors.black,
             ),
           ),

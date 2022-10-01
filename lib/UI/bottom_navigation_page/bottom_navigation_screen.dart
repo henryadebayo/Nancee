@@ -4,7 +4,7 @@ import '../../Utils/App_colors/app_color_file.dart';
 import '../actions_page/action_screen.dart';
 import '../history_page/history_screen.dart';
 import '../home_page/home_screen.dart';
-import '../profile_page/profilr_screen.dart';
+import '../users_page/users_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -18,9 +18,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    const ActionScreen(),
     const HistoryScreen(),
-    const ProfileScreen(),
+    const ActionScreen(),
+    const UsersScreen(),
   ];
 
   @override
@@ -28,6 +28,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
         body: _pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
+          unselectedLabelStyle: const TextStyle(color: Colors.white),
           unselectedIconTheme: const IconThemeData(color: Colors.white),
           selectedIconTheme: IconThemeData(color: AppColors.primaryColor),
           type: BottomNavigationBarType.fixed,
@@ -44,11 +45,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.bookmark),
-              label: "Actions",
+              label: "Accounts",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: "Profile",
+              label: "Users",
             ),
           ],
           currentIndex: _currentIndex,

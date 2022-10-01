@@ -6,6 +6,7 @@ import 'dart:convert';
 
 UserModel? userModelFromJson(String str) =>
     UserModel.fromJson(json.decode(str));
+
 UserModelData? userModelDataFromJson(String str) =>
     UserModelData.fromJson(json.decode(str));
 
@@ -25,35 +26,34 @@ class UserModel {
   String? passWord;
   String? status;
   String? message;
-  UserModelData? data;
+  List<UserModelData>? data;
 
-  factory UserModel.fromJson(Map<String?, dynamic> json) => UserModel(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         status: json["status"],
         message: json["message"],
-        data: UserModelData.fromJson(json["data"]),
+        data: List<UserModelData>.from(
+            json["data"].map((x) => UserModelData.fromJson(x))),
       );
 
   Map<String?, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": data!.toJson(),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
 class UserModelData {
   UserModelData({
     this.phoneNumber,
-    this.amount,
     this.balance,
     this.created,
   });
 
   String? phoneNumber;
-  int? amount;
-  String? balance;
+  var balance;
   DateTime? created;
 
-  factory UserModelData.fromJson(Map<String?, dynamic> json) => UserModelData(
+  factory UserModelData.fromJson(Map<String, dynamic> json) => UserModelData(
         phoneNumber: json["phoneNumber"],
         balance: json["balance"],
         created: DateTime.parse(json["created"]),
@@ -61,7 +61,6 @@ class UserModelData {
 
   Map<String, dynamic> toJson() => {
         "phoneNumber": phoneNumber,
-        "amount": amount,
         "balance": balance,
         "created": created!.toIso8601String(),
       };

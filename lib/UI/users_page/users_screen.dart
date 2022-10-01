@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nannce/UI/users_page/widgets/user_account_widget.dart';
 
 import '../../Blocs/Account_history_boc/account_history_bloc.dart';
 import '../../Utils/App_colors/app_color_file.dart';
 import '../../Utils/widgets/custom_loader.dart';
-import 'widgets/acount_widget.dart';
 
-class ActionScreen extends StatefulWidget {
-  const ActionScreen({Key? key}) : super(key: key);
+class UsersScreen extends StatefulWidget {
+  const UsersScreen({Key? key}) : super(key: key);
 
   @override
-  State<ActionScreen> createState() => _ActionScreenState();
+  State<UsersScreen> createState() => _UsersScreenState();
 }
 
-class _ActionScreenState extends State<ActionScreen> {
+class _UsersScreenState extends State<UsersScreen> {
+  @override
   void initState() {
     super.initState();
-    context.read<AccountHistoryBloc>().add(LoadAccountsEvent());
+    context.read<AccountHistoryBloc>().add(LoadAccountUsersEvent());
   }
 
   @override
@@ -47,11 +48,11 @@ class _ActionScreenState extends State<ActionScreen> {
                 child: Center(child: CustomLoader(label: "Loading Data..."))),
           );
         }
-        if (state is AccountsLoaded) {
+        if (state is AccountUsersLoaded) {
           return ListView.builder(
               itemCount: state.data.length,
               itemBuilder: (BuildContext context, int index) {
-                return AccountWidget(
+                return UserAccountWidget(
                   accountNumber: state.data[index].phoneNumber!,
                   balance: state.data[index].balance ?? 0,
                 );

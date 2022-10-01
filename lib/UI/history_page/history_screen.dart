@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nannce/Blocs/Account_history_boc/account_history_bloc.dart';
 import 'package:nannce/UI/history_page/widgets/history_item_widget.dart';
 
-import '../../Repo/models/transaction_history_model.dart';
-import '../../Repo/services/transaction_history_service.dart';
 import '../../Utils/App_colors/app_color_file.dart';
-import '../../Utils/App_textStyles/app_textstyle_file.dart';
+import '../../Utils/widgets/custom_loader.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -15,16 +15,11 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  TrasactionHistoryService tdd = TrasactionHistoryService();
-
-  List<TransactionHistoryData> acd = [];
-
   @override
   void initState() {
     super.initState();
-    var ancd = tdd.getTransactioHistory();
+    context.read<AccountHistoryBloc>().add(LoadAccountHistoryEvent());
     //getIt<TrasactionHistoryService>().getTransactioHistory();
-    print("THIS WAS CALLED");
   }
 
   @override
@@ -34,37 +29,45 @@ class _HistoryScreenState extends State<HistoryScreen> {
         title: const Text("Transaction history"),
         backgroundColor: AppColors.primaryColor,
       ),
-      body: SingleChildScrollView(
-        child: RefreshIndicator(
-          onRefresh: () => tdd.getTransactioHistory(),
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 30.0.h,
-                color: Colors.grey,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 20.0.w,
-                    ),
-                    Text(
-                      "27 sep 2022",
-                      style: AppTextStyle.BlackBold.copyWith(
-                          color: Colors.grey[200]),
-                    )
-                  ],
-                ),
-              ),
-              HistoryItemWidget(
-                accountNumber: acd[2].phoneNumber!,
-                amount: ancd[2].amount,
-                type: acd[2].type!,
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: BlocConsumer<AccountHistoryBloc, AccountHistoryState>(
+          listener: (context, state) {
+        if (state is AccoundErrorState) {
+          Center(
+            child: Text(
+              state.errorMessage,
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+      }, builder: (context, state) {
+        if (state is AccountLoadingState) {
+          return Center(
+            child: Container(
+                color: Colors.white,
+                height: 50.0.h,
+                width: 70.0.w,
+                child: Center(child: CustomLoader(label: "Loading Data..."))),
+          );
+        }
+        if (state is AccountHistoryLoaded) {
+          return ListView.builder(
+              itemCount: state.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return HistoryItemWidget(
+                  accountNumber: state.data[index].phoneNumber!,
+                  amount: state.data[index].amount ?? 0,
+                  type: state.data[index].type!,
+                );
+              });
+        } else {
+          return const Center(
+            child: Text(
+              "You're Offline\n check internet connection or restart app",
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+      }),
     );
   }
 }

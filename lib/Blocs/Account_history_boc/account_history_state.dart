@@ -5,18 +5,28 @@ abstract class AccountHistoryState {
   const AccountHistoryState();
 }
 
-class InitialAccountHistoryState extends AccountHistoryState {}
+class InitialAccountState extends AccountHistoryState {}
 
-class LoadingAccountHistoryState extends AccountHistoryState {}
+class AccountLoadingState extends AccountHistoryState {}
 
 class AccountHistoryLoaded extends AccountHistoryState {
-  var data;
+  List<TransactionHistoryData> data;
   AccountHistoryLoaded({required this.data}) : super();
 }
 
-class AccoundHistroyError extends AccountHistoryState {
+class AccountUsersLoaded extends AccountHistoryState {
+  List<UserModelData> data;
+  AccountUsersLoaded({required this.data}) : super();
+}
+
+class AccountsLoaded extends AccountHistoryState {
+  List<UserModelData> data;
+  AccountsLoaded({required this.data}) : super();
+}
+
+class AccoundErrorState extends AccountHistoryState {
   String errorMessage;
-  AccoundHistroyError({
+  AccoundErrorState({
     required this.errorMessage,
   }) : super();
 }
