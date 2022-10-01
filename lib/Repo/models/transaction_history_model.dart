@@ -38,8 +38,8 @@ class TransactionHistoryData {
     this.balance,
   });
 
-  Type? type;
-  int? amount;
+  String? type;
+  var amount;
   String? phoneNumber;
   DateTime created;
   int? balance;

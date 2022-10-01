@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nannce/UI/home_page/widgets/bottomSheet.dart';
 
+import '../../Repo/models/transaction_history_model.dart';
 import '../../Repo/services/transaction_history_service.dart';
 import '../../Utils/App_colors/app_color_file.dart';
 import '../history_page/widgets/history_item_widget.dart';
@@ -19,9 +20,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TrasactionHistoryService th = TrasactionHistoryService();
+  List<TransactionHistoryData> acd = [];
   @override
   void initState() {
-    th.getTransactioHistory();
+    acd = th.getTransactioHistory() as List<TransactionHistoryData>;
     super.initState();
   }
 
@@ -248,7 +250,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: ListView.builder(
                             itemBuilder: (BuildContext ctx, int index) {
-                          return const HistoryItemWidget();
+                          return HistoryItemWidget(
+                            accountNumber: acd[2].phoneNumber!,
+                            amount: acd[2].amount,
+                            type: acd[2].type!,
+                          );
                         }),
                       )
                     ],

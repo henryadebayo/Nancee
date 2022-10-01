@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import 'Blocs/auth_bloc/signIn_bloc/sign_in_bloc_bloc.dart';
 import 'Blocs/auth_bloc/signUp_bloc/signup_bloc_bloc.dart';
+import 'Providers/wallet_providers.dart';
 import 'Route_helper/route_manager.dart';
 import 'UI/bottom_navigation_page/bottom_navigation_screen.dart';
 
@@ -21,23 +23,20 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) => MultiBlocProvider(
         providers: [
-          // BlocProvider<NewsBloc>(
-          //     create: (ctx)=>
-          //     NewsBloc(newsServices: NewsServices())
-          //       ..add(StartEvent())
-          // ),
-          // ChangeNotifierProvider(create: (_) => WalletProvider());
           BlocProvider<SignUpBloc>(create: (ctx) => SignUpBloc()),
           BlocProvider<SignInBloc>(create: (ctx) => SignInBloc()),
         ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.amber,
+        child: MultiProvider(
+          providers: [ChangeNotifierProvider(create: (_) => WalletProvider())],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.amber,
+            ),
+            onGenerateRoute: RouteGenerator.generateRoute,
+            // home: const SplashScreen(),
+            home: const BottomNavigation(),
           ),
-          onGenerateRoute: RouteGenerator.generateRoute,
-          // home: const SplashScreen(),
-          home: BottomNavigation(),
         ),
       ),
       designSize: const Size(360, 690),

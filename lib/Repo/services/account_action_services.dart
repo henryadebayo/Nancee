@@ -1,36 +1,46 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:nannce/Utils/const.dart';
 
 import '../models/acccount_transaction_model.dart';
+import 'service_helpers/account_action_helper.dart';
 
 class AccountTransactionServices {
-  late String endPoint;
+  late String? _endPoint;
 
-  Future<AccountTransactionModel?> CreateTransaction(
-    String phoneNumber,
-    String passWord,
-    ActionType actionType,
+  Future<AccountTransactionModel?> createTransaction(
+    String? phoneNumber,
+    int? amount,
+    ActionType? actionType,
   ) async {
-    final Map<String, dynamic> transfer = {
-      "email": phoneNumber,
-      "phoneNumber": passWord,
-    };
-    if (actionType == ActionType.TRANSFER) {
-      endPoint = "accounts/transfer";
-    } else {
-      endPoint = "accounts/withdraw";
-    }
-    http.Response response = await http.post(Uri.parse("$BaseUrl/$endPoint"),
-        body: json.encode(transfer));
-
-    if (response.statusCode == 200) {
-      var data = transferModelFromJson(response.body);
-      print("THIS IS $actionType RESPONSE:::::${data}");
-      return data;
+    try {
+      print("This Was Called ");
+      final Map<String, dynamic> transfer = {
+        "phoneNumber": phoneNumber,
+        "amount": amount,
+      };
+      // if (actionType == ActionType.TRANSFER) {
+      //   _endPoint = "accounts/transfer";
+      // } else {
+      //   _endPoint = "accounts/withdraw";
+      // }
+      // ;
+      // print(transfer.toString());
+      http.Response response = await http.post(
+          Uri.parse("$BaseUrl/accounts/transfer"),
+          headers: {HttpHeaders.contentTypeHeader: "application/json"},
+          body: json.encode(transfer));
+      if (response.statusCode == 200) {
+        var data = transferModelFromJson(response.body);
+        print("THIS IS $actionType RESPONSE:::::${data}");
+        return data;
+      }
+    } on SocketException {
+      print("Check internet connection");
+    } catch (e) {
+      "THIS IS ACOUNT ACTION ERROR ::::::: ${e.toString()}";
     }
   }
 }
-
-enum ActionType { TRANSFER, WITHDRAW }

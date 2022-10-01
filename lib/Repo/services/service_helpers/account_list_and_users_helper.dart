@@ -1,0 +1,1 @@
+enum GetActionType { ACCOUNTLIST, USERSLIST }

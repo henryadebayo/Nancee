@@ -1,22 +1,25 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 import '../../Utils/const.dart';
 import '../models/transaction_history_model.dart';
 
 class TrasactionHistoryService {
-  Future<TransactionHistoryModel?> getTransactioHistory() async {
+  Future<List<TransactionHistoryData>?> getTransactioHistory() async {
     try {
       http.Response response =
           await http.get(Uri.parse("$BaseUrl/transactions"));
       if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
+        var data = TransactionHistoryModelFromJson(response.body);
         print("This is response:::::::::: ${data.toString()}");
-        return data;
+
+        final List<TransactionHistoryData> payLoad = data.data!;
+
+        print("This is TransactionHistory:::::::::: ${payLoad}");
+
+        return payLoad;
       }
     } catch (e) {
-      print("Failled this is error :::::::::: ${e.toString()}");
+      print("Failed this is error :::::::::: ${e.toString()}");
     }
   }
 }

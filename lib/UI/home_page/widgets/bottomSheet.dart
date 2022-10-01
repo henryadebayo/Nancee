@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nannce/Repo/models/user_model.dart';
+import 'package:nannce/Repo/services/service_helpers/account_action_helper.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Providers/wallet_providers.dart';
+import '../../../Repo/services/account_action_services.dart';
 import '../../../Utils/App_colors/app_color_file.dart';
 import '../../auth_page/widgets/customTextButton.dart';
 
@@ -16,6 +19,9 @@ class TransferBottomSheet extends StatefulWidget {
 }
 
 class _TransferBottomSheetState extends State<TransferBottomSheet> {
+  final _formKey = GlobalKey<FormState>();
+  UserModel userModel = UserModel();
+  AccountTransactionServices tdd = AccountTransactionServices();
   double currentValue = 0;
 
   @override
@@ -56,21 +62,31 @@ class _TransferBottomSheetState extends State<TransferBottomSheet> {
                       style:
                           TextStyle(color: Colors.black, letterSpacing: 0.1.w),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.0.w, vertical: 10.0.h),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: "Input Receivers account number",
-                          focusColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.amber, width: 1.0),
-                            borderRadius: BorderRadius.circular(10.0),
+                    Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0.w, vertical: 10.0.h),
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) => userModel.phoneNumber = value,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter account number";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Input Receivers account number",
+                            focusColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.amber, width: 1.0),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                           ),
                         ),
                       ),
@@ -105,6 +121,7 @@ class _TransferBottomSheetState extends State<TransferBottomSheet> {
                       onChanged: (value) {
                         setState(() {
                           currentValue = value;
+                          userModel.amoount = value.toInt();
                         });
                         // print(
                         //     _currentValue.toInt());
@@ -122,7 +139,13 @@ class _TransferBottomSheetState extends State<TransferBottomSheet> {
                         width: double.infinity,
                         height: 50.0.h,
                         child: CustomTextButton(
-                          onSubmit: () {},
+                          onSubmit: () {
+                            if (_formKey.currentState!.validate()) {
+                              print(userModel.amoount);
+                              tdd.createTransaction(userModel.phoneNumber,
+                                  userModel.amoount, ActionType.TRANSFER);
+                            }
+                          },
                           label: "TRANSFER   \$ ${currentValue.toInt()}",
                           textColor: Colors.black,
                         ),

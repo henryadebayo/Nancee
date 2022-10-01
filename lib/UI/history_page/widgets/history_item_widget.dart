@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HistoryItemWidget extends StatelessWidget {
-  const HistoryItemWidget({Key? key}) : super(key: key);
+  String accountNumber;
+  String type;
+  String amount;
+
+  HistoryItemWidget({
+    required this.accountNumber,
+    required this.type,
+    required this.amount,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +21,26 @@ class HistoryItemWidget extends StatelessWidget {
         color: Colors.black,
       ),
       title: Text(
-        "Enike",
+        "$accountNumber",
         style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
       ),
-      trailing: Text(
-        "\$ 200.05",
-        style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
+      trailing: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "\$ $amount",
+            style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
+          ),
+          Text(
+            "$type",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
       subtitle: const Text(
-        "Escrow Service",
+        "williams Service",
         style: TextStyle(color: Colors.grey),
       ),
     );
