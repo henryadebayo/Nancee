@@ -9,7 +9,7 @@ import 'Blocs/auth_bloc/signUp_bloc/signup_bloc_bloc.dart';
 import 'Blocs/users_and_account_bloc/users_and_account_bloc.dart';
 import 'Providers/wallet_providers.dart';
 import 'Route_helper/route_manager.dart';
-import 'UI/bottom_navigation_page/bottom_navigation_screen.dart';
+import 'UI/auth_page/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,8 +39,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.amber,
             ),
             onGenerateRoute: RouteGenerator.generateRoute,
-            // home: const SplashScreen(),
-            home: const BottomNavigation(),
+            home: const SplashScreen(),
           ),
         ),
       ),

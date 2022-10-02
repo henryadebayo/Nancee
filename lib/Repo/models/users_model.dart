@@ -6,17 +6,11 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   UserModel({
-    this.phoneNumber,
-    this.amount,
-    this.password,
     this.status,
     this.message,
     this.data,
   });
 
-  String? phoneNumber;
-  int? amount;
-  String? password;
   String? status;
   String? message;
   UserModelData? data;
@@ -30,7 +24,7 @@ class UserModel {
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": data?.toJson(),
+        "data": data!.toJson(),
       };
 }
 

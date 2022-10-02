@@ -21,7 +21,7 @@ class AuthServices {
       headers: {HttpHeaders.contentTypeHeader: "application/json"},
       body: json.encode(userData),
     );
-
+    print(response.body);
     if (response.statusCode == 200) {
       print("signed up successfully");
       print("This is Sign up response.body ${response.body}");
@@ -30,10 +30,10 @@ class AuthServices {
     }
   }
 
-  Future<UserModel?> signIn(String email, String password) async {
+  Future<UserModel?> signIn(String phoneNumber, String password) async {
     final Map<String, dynamic> userData = {
-      "email": email,
-      "password": password,
+      "phoneNumber": phoneNumber,
+      "password": password
     };
     http.Response response = await http.post(
       Uri.parse('$BaseUrl/auth/login'),

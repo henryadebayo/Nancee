@@ -5,7 +5,7 @@ import 'package:nannce/UI/auth_page/widgets/customTextButton.dart';
 import 'package:nannce/Utils/App_colors/app_color_file.dart';
 
 import '../../Blocs/auth_bloc/signUp_bloc/signup_bloc_bloc.dart';
-import '../../Repo/models/users_model.dart';
+import '../../Repo/models/user.dart';
 import '../../Utils/widgets/custom_loader.dart';
 import 'widgets/formField.dart';
 
@@ -17,7 +17,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  UserModel newUser = UserModel();
+  User user = User();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -53,6 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
         }
         if (state is SignedUpSuccessful) {
+          Navigator.of(context).pushNamed("/bottomNav");
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: AppColors.primaryColor,
             content: Text(
@@ -63,7 +64,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               label: "Dismiss",
               onPressed: () {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                Navigator.of(context).pushNamed("/bottomNav");
               },
             ),
           ));
@@ -114,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             label: "Input Phone Number",
                             autofill: AutofillHints.telephoneNumber,
                             onChanged: (value) {
-                              newUser.phoneNumber = value;
+                              user.phoneNumber = value;
                             },
                             validator: (value) {
                               if (value.isEmpty
@@ -151,7 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               label: "Password",
                               autofill: AutofillHints.password,
                               onChanged: (value) {
-                                newUser.password = value;
+                                user.password = value;
                               },
                               validator: (value) {
                                 if (value.isEmpty) {
@@ -165,10 +165,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   CustomTextButton(
                     onSubmit: () {
+                      print(user.phoneNumber);
+                      print(user.password);
                       if (_formKey.currentState!.validate()) {
                         context.read<SignUpBloc>().add(SignUp(
-                            phoneNumber: newUser.phoneNumber!,
-                            password: newUser.password!));
+                            phoneNumber: user.phoneNumber!,
+                            password: user.password!));
                       }
                     },
                     label: "Sign Up",

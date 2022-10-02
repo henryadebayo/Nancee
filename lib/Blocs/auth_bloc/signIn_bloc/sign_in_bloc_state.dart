@@ -13,6 +13,6 @@ class SignInSuccessful extends SignInState {
 }
 
 class SignInError extends SignInState {
-  final String? errorMsg;
+  String? errorMsg;
   SignInError({this.errorMsg});
 }

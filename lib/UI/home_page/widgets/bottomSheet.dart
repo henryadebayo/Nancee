@@ -5,7 +5,7 @@ import 'package:nannce/Blocs/transaction_bloc/transaction_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Providers/wallet_providers.dart';
-import '../../../Repo/models/users_model.dart';
+import '../../../Repo/models/user.dart';
 import '../../../Repo/services/account_action_services.dart';
 import '../../../Utils/App_colors/app_color_file.dart';
 import '../../../Utils/widgets/custom_loader.dart';
@@ -22,7 +22,7 @@ class TransferBottomSheet extends StatefulWidget {
 
 class _TransferBottomSheetState extends State<TransferBottomSheet> {
   final _formKey = GlobalKey<FormState>();
-  UserModel userModel = UserModel();
+  User userModel = User();
   AccountTransactionServices tdd = AccountTransactionServices();
   double currentValue = 0;
 
@@ -216,7 +216,7 @@ class WithdrawBottomSheet extends StatefulWidget {
 
 class _WithdrawBottomSheetState extends State<WithdrawBottomSheet> {
   final _formKey = GlobalKey<FormState>();
-  UserModel userModel = UserModel();
+  User userModel = User();
   AccountTransactionServices tdd = AccountTransactionServices();
   double currentValue = 0;
 
