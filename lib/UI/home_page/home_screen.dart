@@ -8,6 +8,7 @@ import 'package:nannce/UI/home_page/widgets/bottomSheet.dart';
 import 'package:nannce/Utils/App_textStyles/app_textstyle_file.dart';
 
 import '../../Blocs/users_and_account_bloc/users_and_account_bloc.dart';
+import '../../Providers/wallet_providers.dart';
 import '../../Utils/App_colors/app_color_file.dart';
 import '../../Utils/widgets/custom_loader.dart';
 import '../history_page/widgets/history_item_widget.dart';
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // WalletProvider _userBalance = context.read<WalletProvider>();
+    WalletProvider _userBalance = context.read<WalletProvider>();
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -55,8 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: 20.0.h, vertical: 20.0.w),
                     child: Text(
-                      "9500",
-                      // _userBalance.mainUserBalance.toString(),
+                      "\$ ${_userBalance.mainUserBalance.toString()}",
                       style: TextStyle(
                         color: Colors.white,
                         // fontWeight: FontWeight.w500,

@@ -15,12 +15,12 @@ class AccountHistoryLoaded extends AccountHistoryState {
 }
 
 class AccountUsersLoaded extends AccountHistoryState {
-  List<UserModelData> data;
+  List<AccountAndUserAccountModelData> data;
   AccountUsersLoaded({required this.data}) : super();
 }
 
 class AccountsLoaded extends AccountHistoryState {
-  List<UserModelData> data;
+  List<AccountAndUserAccountModelData> data;
   AccountsLoaded({required this.data}) : super();
 }
 

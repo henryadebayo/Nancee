@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nannce/Repo/models/user_model.dart';
 import 'package:nannce/Repo/services/service_helpers/account_action_helper.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Providers/wallet_providers.dart';
+import '../../../Repo/models/users_model.dart';
 import '../../../Repo/services/account_action_services.dart';
 import '../../../Utils/App_colors/app_color_file.dart';
 import '../../auth_page/widgets/customTextButton.dart';

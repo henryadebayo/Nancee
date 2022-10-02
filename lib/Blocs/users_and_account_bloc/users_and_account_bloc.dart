@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:nannce/Repo/services/service_helpers/account_list_and_users_helper.dart';
 
+import '../../Repo/models/account_and_user_account_model.dart';
 import '../../Repo/models/transaction_history_model.dart';
-import '../../Repo/models/user_model.dart';
 import '../../Repo/services/get_account_list_and_users_services.dart';
 import '../../Repo/services/transaction_history_service.dart';
 

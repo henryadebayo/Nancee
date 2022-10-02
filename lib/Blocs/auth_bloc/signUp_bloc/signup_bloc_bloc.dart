@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../Repo/models/users_model.dart';
 import '../../../Repo/services/auth_services.dart';
 
 part 'signup_bloc_event.dart';
@@ -17,12 +18,14 @@ class SignUpBloc extends Bloc<SignupEvent, SignUpBlocState> {
           final authServices = AuthServices();
           final user =
               await authServices.signUp(event.phoneNumber, event.password);
-
           emit(SignedUpSuccessful(message: user!.message));
         } on SocketException {
           emit(SignedUpError(errorMessage: "Check Internet Connection"));
         } catch (e) {
-          emit(SignedUpError(errorMessage: e.toString()));
+          emit(
+            SignedUpError(errorMessage: e.toString()),
+          );
+          print(e.toString());
         }
       }
     });

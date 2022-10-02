@@ -14,11 +14,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       if (event is SignIn) {
         try {
           emit(SignInLoading());
-          final authServices = AuthServices();
+          final AuthServices authServices = AuthServices();
           final user =
               await authServices.signIn(event.phoneNumber, event.password);
           print("THIS IS SIGN IN BLOC MESSAGE :::::${user}");
-          emit(SignInSuccessful(user: user));
+          emit(SignInSuccessful(message: user!.message));
         } on SocketException {
           emit(SignInError(errorMsg: "Check Internet Connection"));
         } catch (e) {

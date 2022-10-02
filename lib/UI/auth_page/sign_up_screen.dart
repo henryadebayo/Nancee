@@ -5,9 +5,8 @@ import 'package:nannce/UI/auth_page/widgets/customTextButton.dart';
 import 'package:nannce/Utils/App_colors/app_color_file.dart';
 
 import '../../Blocs/auth_bloc/signUp_bloc/signup_bloc_bloc.dart';
-import '../../Repo/models/user_model.dart';
+import '../../Repo/models/users_model.dart';
 import '../../Utils/widgets/custom_loader.dart';
-import '../bottom_navigation_page/bottom_navigation_screen.dart';
 import 'widgets/formField.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -45,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       }, builder: (context, state) {
         if (state is SignUpLoading) {
-          Center(
+          return Center(
             child: Container(
                 color: Colors.white,
                 height: 50.0.h,
@@ -54,25 +53,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
         }
         if (state is SignedUpSuccessful) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (BuildContext context) {
-            return BottomNavigation();
-          }));
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: AppColors.primaryColor,
-              content: Text(
-                state.message!,
-                style: TextStyle(color: Colors.white),
-              ),
-              action: SnackBarAction(
-                label: "Dismiss",
-                onPressed: () {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                },
-              ),
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: AppColors.primaryColor,
+            content: Text(
+              state.message!,
+              style: TextStyle(color: Colors.white),
             ),
-          );
+            action: SnackBarAction(
+              label: "Dismiss",
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                Navigator.of(context).pushNamed("/bottomNav");
+              },
+            ),
+          ));
         }
         return SafeArea(
           child: SingleChildScrollView(
@@ -157,7 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               label: "Password",
                               autofill: AutofillHints.password,
                               onChanged: (value) {
-                                newUser.passWord = value;
+                                newUser.password = value;
                               },
                               validator: (value) {
                                 if (value.isEmpty) {
@@ -174,7 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (_formKey.currentState!.validate()) {
                         context.read<SignUpBloc>().add(SignUp(
                             phoneNumber: newUser.phoneNumber!,
-                            password: newUser.passWord!));
+                            password: newUser.password!));
                       }
                     },
                     label: "Sign Up",

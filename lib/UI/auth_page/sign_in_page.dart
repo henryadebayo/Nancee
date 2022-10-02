@@ -5,7 +5,7 @@ import 'package:nannce/UI/auth_page/widgets/customTextButton.dart';
 import 'package:nannce/UI/auth_page/widgets/formField.dart';
 
 import '../../Blocs/auth_bloc/signIn_bloc/sign_in_bloc_bloc.dart';
-import '../../Repo/models/user_model.dart';
+import '../../Repo/models/users_model.dart';
 import '../../Utils/App_colors/app_color_file.dart';
 import '../../Utils/widgets/custom_loader.dart';
 
@@ -55,10 +55,18 @@ class _SignInScreenState extends State<SignInScreen> {
           );
         }
         if (state is SignInSuccessful) {
-          return const Center(
-            child: Text(
-              "home screen",
-              style: TextStyle(color: Colors.white),
+          return SnackBar(
+            backgroundColor: AppColors.primaryColor,
+            content: Text(
+              state.message!,
+              style: const TextStyle(color: Colors.white),
+            ),
+            action: SnackBarAction(
+              label: "Dismiss",
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                Navigator.of(context).pushNamed("/bottomNav");
+              },
             ),
           );
         } else {
@@ -119,7 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               label: "Password",
                               autofill: AutofillHints.password,
                               onChanged: (value) {
-                                newUser.passWord = value;
+                                newUser.password = value;
                               },
                               validator: (email) => email == null
                                   // &&
@@ -137,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         if (_formKey.currentState!.validate()) {
                           context.read<SignInBloc>().add(SignIn(
                               phoneNumber: newUser.phoneNumber!,
-                              password: newUser.passWord!));
+                              password: newUser.password!));
                         }
                       },
                       label: "Sign In",

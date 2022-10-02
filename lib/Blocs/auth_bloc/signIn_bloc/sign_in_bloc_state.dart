@@ -8,8 +8,8 @@ class SignInInitial extends SignInState {}
 class SignInLoading extends SignInState {}
 
 class SignInSuccessful extends SignInState {
-  var user;
-  SignInSuccessful({required this.user});
+  String? message;
+  SignInSuccessful({this.message});
 }
 
 class SignInError extends SignInState {
