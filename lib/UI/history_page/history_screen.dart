@@ -50,6 +50,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           );
         }
         if (state is AccountHistoryLoaded) {
+          print("HERYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
           return ListView.builder(
               itemCount: state.data.length,
               itemBuilder: (BuildContext context, int index) {

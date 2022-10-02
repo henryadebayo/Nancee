@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
             ),
             onGenerateRoute: RouteGenerator.generateRoute,
             home: const SplashScreen(),
+            //home: const BottomNavigation(),
           ),
         ),
       ),

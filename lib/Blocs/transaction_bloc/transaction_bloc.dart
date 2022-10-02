@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../Repo/services/account_action_services.dart';
@@ -23,7 +24,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
           emit(TransferTransactionSuccesful(message: transaction!.message!));
           // emit(InitialTransactionState());
         } on SocketException {
-          emit(TransactionErrorState(
+          emit(const TransactionErrorState(
             errorMessage: "You Are Offline\n check internet connection",
           ));
         } catch (e) {
@@ -44,7 +45,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
 
           emit(WithdrawTransactionSuccesful(message: transaction!.message!));
         } on SocketException {
-          emit(TransactionErrorState(
+          emit(const TransactionErrorState(
             errorMessage: "You Are Offline\n check internet connection",
           ));
         } catch (e) {

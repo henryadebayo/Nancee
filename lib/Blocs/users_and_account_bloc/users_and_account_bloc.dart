@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:nannce/Repo/services/service_helpers/account_list_and_users_helper.dart';
 
@@ -23,7 +24,7 @@ class AccountHistoryBloc
               TrasactionHistoryService();
           final accounthistory =
               await trasactionHistoryService.getTransactioHistory();
-
+          print(accounthistory);
           emit(AccountHistoryLoaded(data: accounthistory));
         } on SocketException {
           emit(AccoundErrorState(

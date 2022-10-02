@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-TransactionHistoryModel TransactionHistoryModelFromJson(String str) =>
+TransactionHistoryModel transactionHistoryModelFromJson(String str) =>
     TransactionHistoryModel.fromJson(json.decode(str));
 
-String TransactionHistoryModelToJson(TransactionHistoryModel data) =>
+String transactionHistoryModelToJson(TransactionHistoryModel data) =>
     json.encode(data.toJson());
 
 class TransactionHistoryModel {
@@ -13,19 +13,22 @@ class TransactionHistoryModel {
   });
 
   String? status;
-  String? message;
   List<TransactionHistoryData>? data;
 
   factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) =>
       TransactionHistoryModel(
-        status: json["status"],
-        data: List<TransactionHistoryData>.from(
-            json["data"].map((x) => TransactionHistoryData.fromJson(x))),
+        status: json["status"] == null ? null : json["status"],
+        data: json["data"] == null
+            ? null
+            : List<TransactionHistoryData>.from(
+                json["data"].map((x) => TransactionHistoryData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+        "status": status == null ? null : status,
+        "data": data == null
+            ? null
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
@@ -34,32 +37,31 @@ class TransactionHistoryData {
     this.type,
     this.amount,
     this.phoneNumber,
-    required this.created,
+    this.created,
     this.balance,
   });
 
   String? type;
-  var amount;
+  double? amount;
   String? phoneNumber;
-  DateTime created;
-  int? balance;
+  DateTime? created;
+  double? balance;
 
   factory TransactionHistoryData.fromJson(Map<String, dynamic> json) =>
       TransactionHistoryData(
         type: json["type"],
-        amount: json["amount"],
-        phoneNumber: json["phoneNumber"],
-        created: DateTime.parse(json["created"]),
-        balance: json["balance"],
+        amount: json["amount"] == null ? null : json["amount"].toDouble(),
+        phoneNumber: json["phoneNumber"] == null ? null : json["phoneNumber"],
+        created:
+            json["created"] == null ? null : DateTime.parse(json["created"]),
+        balance: json["balance"] == null ? null : json["balance"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
         "type": type,
-        "amount": amount,
-        "phoneNumber": phoneNumber,
-        "created": created.toIso8601String(),
-        "balance": balance,
+        "amount": amount == null ? null : amount,
+        "phoneNumber": phoneNumber == null ? null : phoneNumber,
+        "created": created == null ? null : created?.toIso8601String(),
+        "balance": balance == null ? null : balance,
       };
 }
-
-enum Type { CREDIT, DEBIT }

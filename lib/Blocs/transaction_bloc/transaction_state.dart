@@ -1,27 +1,44 @@
 part of 'transaction_bloc.dart';
 
 @immutable
-abstract class TransactionState {
+abstract class TransactionState extends Equatable {
   const TransactionState();
 }
 
-class InitialTransactionState extends TransactionState {}
+class InitialTransactionState extends TransactionState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
 
-class TransactionLoadingState extends TransactionState {}
+class TransactionLoadingState extends TransactionState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
 
 class TransferTransactionSuccesful extends TransactionState {
-  String message;
-  TransferTransactionSuccesful({required this.message}) : super();
+  final String message;
+  const TransferTransactionSuccesful({required this.message}) : super();
+
+  @override
+  List<Object?> get props => [message];
 }
 
 class WithdrawTransactionSuccesful extends TransactionState {
-  String message;
-  WithdrawTransactionSuccesful({required this.message}) : super();
+  final String message;
+  const WithdrawTransactionSuccesful({required this.message}) : super();
+
+  @override
+  List<Object?> get props => [message];
 }
 
 class TransactionErrorState extends TransactionState {
-  String errorMessage;
-  TransactionErrorState({
+  final String errorMessage;
+  const TransactionErrorState({
     required this.errorMessage,
   }) : super();
+
+  @override
+  List<Object?> get props => [errorMessage];
 }
