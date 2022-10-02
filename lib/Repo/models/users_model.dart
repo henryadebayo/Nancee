@@ -7,7 +7,7 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 class UserModel {
   UserModel({
     this.phoneNumber,
-    this.amoount,
+    this.amount,
     this.password,
     this.status,
     this.message,
@@ -15,7 +15,7 @@ class UserModel {
   });
 
   String? phoneNumber;
-  int? amoount;
+  int? amount;
   String? password;
   String? status;
   String? message;

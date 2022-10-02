@@ -59,13 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       "\$ ${_userBalance.mainUserBalance.toString()}",
                       style: TextStyle(
                         color: Colors.white,
-                        // fontWeight: FontWeight.w500,
-                        //   letterSpacing: 0.5,
                         fontSize: 30.0.sp,
                       ),
                     ),
                   ),
-                  // CARD WIDGET
                   Center(
                     child: GestureDetector(
                       onTap: () {
@@ -179,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           backgroundColor: Colors.transparent,
                                           context: context,
                                           builder: (context) {
-                                            return const TransferBottomSheet();
+                                            return const WithdrawBottomSheet();
                                           });
                                     },
                                   ),
