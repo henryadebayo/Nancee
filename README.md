@@ -1,6 +1,6 @@
-# nannce
 
-A new Flutter project.
+Name: Henry Adebayo
+Veegil Banking App.
 
 ## Getting Started
 
