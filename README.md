@@ -1,8 +1,7 @@
 
-Name: Henry Adebayo
-Veegil Banking App.
+## Henry Adebayo
 
-## Getting Started
+## Veegil Banking App.
 
 This project is a starting point for a Flutter application.
 
