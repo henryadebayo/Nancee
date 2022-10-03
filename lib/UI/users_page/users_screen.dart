@@ -54,6 +54,7 @@ class _UsersScreenState extends State<UsersScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return UserAccountWidget(
                   accountNumber: state.data[index].phoneNumber!,
+                  name: "User $index",
                   balance: state.data[index].balance ?? 0,
                 );
               });

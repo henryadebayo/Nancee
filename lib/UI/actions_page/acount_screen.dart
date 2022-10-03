@@ -24,7 +24,7 @@ class _ActionScreenState extends State<ActionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("List of Users Screen"),
+        title: const Text("List of Accounts Screen"),
         backgroundColor: AppColors.primaryColor,
       ),
       body: BlocConsumer<AccountHistoryBloc, AccountHistoryState>(
@@ -52,6 +52,7 @@ class _ActionScreenState extends State<ActionScreen> {
               itemCount: state.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return AccountWidget(
+                  // date: state.data[index].created!.toString(),
                   accountNumber: state.data[index].phoneNumber!,
                   balance: state.data[index].balance ?? 0,
                 );

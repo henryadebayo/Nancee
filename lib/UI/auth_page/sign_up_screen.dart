@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               backgroundColor: AppColors.primaryColor,
               content: Text(
                 state.errorMessage!,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               action: SnackBarAction(
                 label: "Dismiss",
@@ -53,20 +53,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
         }
         if (state is SignedUpSuccessful) {
-          Navigator.of(context).pushNamed("/bottomNav");
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: AppColors.primaryColor,
-            content: Text(
-              state.message!,
-              style: TextStyle(color: Colors.white),
-            ),
-            action: SnackBarAction(
-              label: "Dismiss",
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
-          ));
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: AppColors.primaryColor,
+              content: Text(
+                state.message!,
+                style: const TextStyle(color: Colors.white),
+              ),
+              action: SnackBarAction(
+                label: "Dismiss",
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+              ),
+            ));
+            Navigator.of(context).pushNamed("/bottomNav");
+          });
         }
         return SafeArea(
           child: SingleChildScrollView(

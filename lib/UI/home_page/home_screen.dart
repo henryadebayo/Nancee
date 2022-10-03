@@ -24,8 +24,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    context.read<AccountHistoryBloc>().add(LoadAccountHistoryEvent());
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<AccountHistoryBloc>().add(LoadAccountHistoryEvent());
+    });
   }
 
   @override

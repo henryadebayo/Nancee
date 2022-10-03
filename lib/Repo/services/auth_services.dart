@@ -21,6 +21,7 @@ class AuthServices {
       headers: {HttpHeaders.contentTypeHeader: "application/json"},
       body: json.encode(userData),
     );
+    print(response.statusCode);
     print(response.body);
     if (response.statusCode == 200) {
       print("signed up successfully");
@@ -28,6 +29,7 @@ class AuthServices {
       var res = userModelFromJson(response.body);
       return res;
     }
+    return throw "phoneNumber is registered";
   }
 
   Future<UserModel?> signIn(String phoneNumber, String password) async {

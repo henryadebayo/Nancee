@@ -24,7 +24,7 @@ class AccountHistoryBloc
               TrasactionHistoryService();
           final accounthistory =
               await trasactionHistoryService.getTransactioHistory();
-          print(accounthistory);
+
           emit(AccountHistoryLoaded(data: accounthistory));
         } on SocketException {
           emit(AccoundErrorState(

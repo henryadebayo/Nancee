@@ -4,14 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AccountWidget extends StatelessWidget {
   String? accountNumber;
+  DateTime? date;
   var balance;
-  AccountWidget({this.accountNumber, this.balance, Key? key}) : super(key: key);
+  AccountWidget({this.accountNumber, this.date, this.balance, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(
-        Icons.person_pin,
+        Icons.account_balance_wallet,
         color: Colors.black,
       ),
       title: Text(
@@ -25,16 +27,17 @@ class AccountWidget extends StatelessWidget {
             "\$ $balance",
             style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
           ),
-          const Text(
-            "Date created",
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
+          // DateTime([date])
+          // Text(
+          //   "$date",
+          //   style: TextStyle(
+          //     color: Colors.black,
+          //   ),
+          // ),
         ],
       ),
       subtitle: const Text(
-        "williams Service",
+        "Savings Account",
         style: TextStyle(color: Colors.grey),
       ),
     );

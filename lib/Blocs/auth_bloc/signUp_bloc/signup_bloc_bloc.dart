@@ -22,8 +22,14 @@ class SignUpBloc extends Bloc<SignupEvent, SignUpBlocState> {
         } on SocketException {
           emit(SignedUpError(errorMessage: "Check Internet Connection"));
         } catch (e) {
+          String errorMessage = "";
+          if (e == null) {
+            errorMessage = "Phone Number Already Exist";
+          } else {
+            errorMessage = e.toString();
+          }
           emit(
-            SignedUpError(errorMessage: e.toString()),
+            SignedUpError(errorMessage: errorMessage),
           );
           print(e.toString());
         }

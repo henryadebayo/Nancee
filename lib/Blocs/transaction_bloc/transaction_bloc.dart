@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -11,49 +12,52 @@ part 'transaction_state.dart';
 
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   TransactionBloc() : super(InitialTransactionState()) {
-    on<TransactionEvent>((event, emit) async {
-      if (event is TransferEvent) {
-        try {
-          emit(TransactionLoadingState());
-          final AccountTransactionServices accountTransactionServices =
-              AccountTransactionServices();
-          final transaction =
-              await accountTransactionServices.transferTransction(
-                  acccountNumber: event.accountNumber!, amount: event.amount);
+    on<TransferEvent>(_handleTransferEvent);
+    on<WithdrawEvent>(_handleWithdrawEvent);
+  }
 
-          emit(TransferTransactionSuccesful(message: transaction!.message!));
-          // emit(InitialTransactionState());
-        } on SocketException {
-          emit(const TransactionErrorState(
-            errorMessage: "You Are Offline\n check internet connection",
-          ));
-        } catch (e) {
-          emit(TransactionErrorState(
-            errorMessage: e.toString(),
-          ));
-        }
-      }
-      if (event is WithdrawEvent) {
-        try {
-          emit(TransactionLoadingState());
+  Future<void> wd() async {}
 
-          final AccountTransactionServices accountTransactionServices =
-              AccountTransactionServices();
-          final transaction =
-              await accountTransactionServices.withdrawTransction(
-                  acccountNumber: event.accountNumber!, amount: event.amount);
+  FutureOr<void> _handleTransferEvent(
+      TransferEvent event, Emitter<TransactionState> emit) async {
+    try {
+      emit(TransactionLoadingState());
+      final AccountTransactionServices accountTransactionServices =
+          AccountTransactionServices();
+      final transaction = await accountTransactionServices.transferTransction(
+          acccountNumber: event.accountNumber!, amount: event.amount);
 
-          emit(WithdrawTransactionSuccesful(message: transaction!.message!));
-        } on SocketException {
-          emit(const TransactionErrorState(
-            errorMessage: "You Are Offline\n check internet connection",
-          ));
-        } catch (e) {
-          emit(TransactionErrorState(
-            errorMessage: e.toString(),
-          ));
-        }
-      }
-    });
+      emit(TransferTransactionSuccesful(message: transaction!.message!));
+    } on SocketException {
+      emit(const TransactionErrorState(
+        errorMessage: "You Are Offline\n check internet connection",
+      ));
+    } catch (e) {
+      emit(TransactionErrorState(
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+
+  FutureOr<void> _handleWithdrawEvent(
+      WithdrawEvent event, Emitter<TransactionState> emit) async {
+    try {
+      emit(TransactionLoadingState());
+
+      final AccountTransactionServices accountTransactionServices =
+          AccountTransactionServices();
+      final transaction = await accountTransactionServices.withdrawTransction(
+          acccountNumber: event.accountNumber!, amount: event.amount);
+
+      emit(WithdrawTransactionSuccesful(message: transaction!.message!));
+    } on SocketException {
+      emit(const TransactionErrorState(
+        errorMessage: "You Are Offline\n check internet connection",
+      ));
+    } catch (e) {
+      emit(TransactionErrorState(
+        errorMessage: e.toString(),
+      ));
+    }
   }
 }

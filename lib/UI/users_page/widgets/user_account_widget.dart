@@ -4,8 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserAccountWidget extends StatelessWidget {
   String? accountNumber;
+  String? name;
   var balance;
-  UserAccountWidget({this.accountNumber, this.balance, Key? key})
+  UserAccountWidget({this.accountNumber, this.name, this.balance, Key? key})
       : super(key: key);
 
   @override
@@ -16,7 +17,7 @@ class UserAccountWidget extends StatelessWidget {
         color: Colors.black,
       ),
       title: Text(
-        "$accountNumber",
+        "$name",
         style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
       ),
       trailing: Column(
@@ -27,15 +28,15 @@ class UserAccountWidget extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
           ),
           const Text(
-            "Date created",
+            "current account",
             style: TextStyle(
               color: Colors.black,
             ),
           ),
         ],
       ),
-      subtitle: const Text(
-        "williams Service",
+      subtitle: Text(
+        "$accountNumber",
         style: TextStyle(color: Colors.grey),
       ),
     );
