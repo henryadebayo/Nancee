@@ -64,8 +64,6 @@ class GetStartedScreen extends StatelessWidget {
                 height: 55.0,
                 width: MediaQuery.of(context).size.width - 50,
                 child: TextButton(
-                    // onLongPress: () =>
-                    //     Navigator.of(context).pushNamed("/bottomNav"),
                     onPressed: () {
                       Navigator.of(context).pushNamed("/signUp");
                     },

@@ -27,13 +27,6 @@ class AccountWidget extends StatelessWidget {
             "\$ $balance",
             style: TextStyle(color: Colors.black, fontSize: 15.0.sp),
           ),
-          // DateTime([date])
-          // Text(
-          //   "$date",
-          //   style: TextStyle(
-          //     color: Colors.black,
-          //   ),
-          // ),
         ],
       ),
       subtitle: const Text(

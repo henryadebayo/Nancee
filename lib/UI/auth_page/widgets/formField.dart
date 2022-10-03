@@ -1,10 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextForm extends StatelessWidget {
-  String  label;
+  String label;
+  List<TextInputFormatter>? formatter;
+  int? maxlenghth;
   var keyboardType;
   var autofill;
   FormFieldValidator validator;
@@ -12,11 +14,14 @@ class CustomTextForm extends StatelessWidget {
   double? height;
   bool? hideText;
   final ValueChanged<String> onChanged;
-  CustomTextForm({Key? key,
+  CustomTextForm({
+    Key? key,
+    this.formatter,
     required this.onChanged,
     required this.label,
+    this.maxlenghth,
     this.autofill,
-     this.height,
+    this.height,
     this.suffixIcon,
     this.hideText,
     this.keyboardType,
@@ -26,6 +31,8 @@ class CustomTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: formatter,
+      // inputFormatters: [LengthLimitingTextInputFormatter(13)],
       style: TextStyle(color: Colors.white),
       keyboardType: keyboardType,
       autofillHints: [autofill],
@@ -36,25 +43,30 @@ class CustomTextForm extends StatelessWidget {
         suffix: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0.r),
-          borderSide:  BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: Colors.white),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0.r),
           borderSide: BorderSide(color: Colors.amber),
         ),
         labelStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsets.symmetric(horizontal: 19.w, vertical: 14.h,),
-       // hintText: label,
-       // label: Text(label),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 19.w,
+          vertical: 14.h,
+        ),
+        // hintText: label,
+        // label: Text(label),
         labelText: label,
-       // fillColor: Colors.white,
-       // filled: true,
+        // fillColor: Colors.white,
+        // filled: true,
         focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4.0.r),
-        borderSide: BorderSide(color: Colors.amber),),
-    errorBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(4.0.r),
-    borderSide: BorderSide(color: Colors.red),),
+          borderRadius: BorderRadius.circular(4.0.r),
+          borderSide: BorderSide(color: Colors.amber),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(4.0.r),
+          borderSide: BorderSide(color: Colors.red),
+        ),
       ),
     );
   }

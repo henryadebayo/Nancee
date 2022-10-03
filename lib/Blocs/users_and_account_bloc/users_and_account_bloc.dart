@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -16,69 +17,75 @@ part 'users_and_account_state.dart';
 class AccountHistoryBloc
     extends Bloc<AccoundHistroyEvent, AccountHistoryState> {
   AccountHistoryBloc() : super(InitialAccountState()) {
-    on<AccoundHistroyEvent>((event, emit) async {
-      if (event is LoadAccountHistoryEvent) {
-        try {
-          emit(AccountLoadingState());
-          final TrasactionHistoryService trasactionHistoryService =
-              TrasactionHistoryService();
-          final accounthistory =
-              await trasactionHistoryService.getTransactioHistory();
+    on<LoadAccountHistoryEvent>(_handleLoadAccountHistoryEvent);
+    on<LoadAccountUsersEvent>(_handlesLoadAccountUsersEvent);
+    on<LoadAccountsEvent>(_handlesLoadAccountsEvent);
+  }
 
-          emit(AccountHistoryLoaded(data: accounthistory));
-        } on SocketException {
-          emit(AccoundErrorState(
-            errorMessage: "You Are Offline\n check internet connection",
-          ));
-        } catch (e) {
-          emit(AccoundErrorState(
-            errorMessage: e.toString(),
-          ));
-        }
-      }
-      if (event is LoadAccountUsersEvent) {
-        try {
-          emit(AccountLoadingState());
+  FutureOr<void> _handleLoadAccountHistoryEvent(
+      LoadAccountHistoryEvent event, Emitter<AccountHistoryState> emit) async {
+    try {
+      emit(AccountLoadingState());
+      final TrasactionHistoryService trasactionHistoryService =
+          TrasactionHistoryService();
+      final accounthistory =
+          await trasactionHistoryService.getTransactioHistory();
 
-          final AccountListAndUserServices accountListAndUserServices =
-              AccountListAndUserServices();
+      emit(AccountHistoryLoaded(data: accounthistory));
+    } on SocketException {
+      emit(AccoundErrorState(
+        errorMessage: "You Are Offline\n check internet connection",
+      ));
+    } catch (e) {
+      emit(AccoundErrorState(
+        errorMessage: e.toString(),
+      ));
+    }
+  }
 
-          final accountusers = await accountListAndUserServices.getAccountList(
-              action: GetActionType.USERSLIST);
+  FutureOr<void> _handlesLoadAccountUsersEvent(
+      LoadAccountUsersEvent event, Emitter<AccountHistoryState> emit) async {
+    try {
+      emit(AccountLoadingState());
 
-          emit(AccountUsersLoaded(data: accountusers!));
-        } on SocketException {
-          emit(AccoundErrorState(
-            errorMessage: "You Are Offline\n check internet connection",
-          ));
-        } catch (e) {
-          emit(AccoundErrorState(
-            errorMessage: e.toString(),
-          ));
-        }
-      }
+      final AccountListAndUserServices accountListAndUserServices =
+          AccountListAndUserServices();
 
-      if (event is LoadAccountsEvent) {
-        try {
-          emit(AccountLoadingState());
+      final accountusers = await accountListAndUserServices.getAccountList(
+          action: GetActionType.USERSLIST);
 
-          final AccountListAndUserServices accountListAndUserServices =
-              AccountListAndUserServices();
+      emit(AccountUsersLoaded(data: accountusers!));
+    } on SocketException {
+      emit(AccoundErrorState(
+        errorMessage: "You Are Offline\n check internet connection",
+      ));
+    } catch (e) {
+      emit(AccoundErrorState(
+        errorMessage: e.toString(),
+      ));
+    }
+  }
 
-          final accounts = await accountListAndUserServices.getAccountList(
-              action: GetActionType.ACCOUNTLIST);
+  FutureOr<void> _handlesLoadAccountsEvent(
+      LoadAccountsEvent event, Emitter<AccountHistoryState> emit) async {
+    try {
+      emit(AccountLoadingState());
 
-          emit(AccountsLoaded(data: accounts!));
-        } on SocketException {
-          emit(AccoundErrorState(
-            errorMessage: "You Are Offline\n check internet connection",
-          ));
-        } catch (e) {
-          emit(AccoundErrorState(
-            errorMessage: e.toString(),
-          ));
-        }
-      }
-    });
+      final AccountListAndUserServices accountListAndUserServices =
+          AccountListAndUserServices();
+
+      final accounts = await accountListAndUserServices.getAccountList(
+          action: GetActionType.ACCOUNTLIST);
+
+      emit(AccountsLoaded(data: accounts!));
+    } on SocketException {
+      emit(AccoundErrorState(
+        errorMessage: "You Are Offline\n check internet connection",
+      ));
+    } catch (e) {
+      emit(AccoundErrorState(
+        errorMessage: e.toString(),
+      ));
+    }
   }
 }

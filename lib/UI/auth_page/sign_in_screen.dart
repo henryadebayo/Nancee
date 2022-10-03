@@ -1,37 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nannce/UI/auth_page/widgets/sign_up_widget.dart';
-import 'package:nannce/Utils/App_colors/app_color_file.dart';
+import 'package:nannce/UI/auth_page/widgets/sign_in_widget.dart';
 
-import '../../Blocs/auth_bloc/signUp_bloc/signup_bloc_bloc.dart';
+import '../../Blocs/auth_bloc/signIn_bloc/sign_in_bloc_bloc.dart';
 import '../../Repo/models/user.dart';
+import '../../Utils/App_colors/app_color_file.dart';
 import '../../Utils/widgets/custom_loader.dart';
 import '../bottom_navigation_page/bottom_navigation_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  User user = User();
+class _SignInScreenState extends State<SignInScreen> {
+  User newUser = User();
+  late final String email;
+  late final String password;
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body:
-          BlocConsumer<SignUpBloc, SignUpBlocState>(listener: (context, state) {
-        if (state is SignedUpError) {
+      body: BlocConsumer<SignInBloc, SignInState>(listener: (context, state) {
+        if (state is SignInError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: AppColors.primaryColor,
               content: Text(
-                state.errorMessage!,
-                style: const TextStyle(color: Colors.white),
+                state.errorMsg!,
+                style: TextStyle(color: Colors.white),
               ),
               action: SnackBarAction(
                 label: "Dismiss",
@@ -43,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
         }
       }, builder: (context, state) {
-        if (state is SignUpLoading) {
+        if (state is SignInLoading) {
           return Center(
             child: Container(
                 color: Colors.white,
@@ -52,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Center(child: CustomLoader(label: "Creating Account"))),
           );
         }
-        if (state is SignedUpSuccessful) {
+        if (state is SignInSuccessful) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: AppColors.primaryColor,
@@ -69,11 +71,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ));
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (BuildContext context) {
-              return BottomNavigation();
+              return const BottomNavigation();
             }));
           });
         }
-        return SignUpWidget(formKey: _formKey, user: user);
+        return SignInWidget(formKey: _formKey, newUser: newUser);
       }),
     );
   }
