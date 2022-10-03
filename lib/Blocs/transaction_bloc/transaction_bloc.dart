@@ -16,8 +16,6 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     on<WithdrawEvent>(_handleWithdrawEvent);
   }
 
-  Future<void> wd() async {}
-
   FutureOr<void> _handleTransferEvent(
       TransferEvent event, Emitter<TransactionState> emit) async {
     try {

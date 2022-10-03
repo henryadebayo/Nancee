@@ -22,7 +22,16 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         } on SocketException {
           emit(SignInError(errorMsg: "Check Internet Connection"));
         } catch (e) {
-          emit(SignInError(errorMsg: e.toString()));
+          String errorMessage = "";
+          if (e == null) {
+            errorMessage = "Invalid login credentials";
+          } else {
+            errorMessage = e.toString();
+          }
+          emit(
+            SignInError(errorMsg: errorMessage),
+          );
+          print(e.toString());
         }
       }
       if (event is SignOut) {

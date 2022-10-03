@@ -55,20 +55,22 @@ class _SignInScreenState extends State<SignInScreen> {
           );
         }
         if (state is SignInSuccessful) {
-          Navigator.of(context).pushNamed("/bottomNav");
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: AppColors.primaryColor,
-            content: Text(
-              state.message!,
-              style: TextStyle(color: Colors.white),
-            ),
-            action: SnackBarAction(
-              label: "Dismiss",
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              },
-            ),
-          ));
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: AppColors.primaryColor,
+              content: Text(
+                state.message!,
+                style: const TextStyle(color: Colors.white),
+              ),
+              action: SnackBarAction(
+                label: "Dismiss",
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+              ),
+            ));
+            Navigator.of(context).pushNamed("/bottomNav");
+          });
         }
         return SafeArea(
           child: SingleChildScrollView(

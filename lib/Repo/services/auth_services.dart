@@ -11,7 +11,8 @@ import '../models/users_model.dart';
 class AuthServices {
   final UserModel userModel = UserModel();
 
-  Future<UserModel?> signUp(String phoneNumber, String password) async {
+  Future<UserModel?> signUp(
+      {required String phoneNumber, required String password}) async {
     final Map<String, dynamic> userData = {
       "phoneNumber": phoneNumber,
       "password": password
@@ -51,6 +52,7 @@ class AuthServices {
       prefs.setString('user', json.encode(user!.toJson()));
       return res;
     }
+    return throw "Invalid login credentials";
   }
 
   Future<dynamic> getLoggedInUserData() async {
