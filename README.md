@@ -14,7 +14,8 @@ This is a Banking App that enables user
 Details on how to use the app:
 #HOW TO CREATE AN ACCOUNT OR SIGN-IN AN EXISTING ACCOUNT
 On app start up after the splash screen user can create accounnt or login existing account by clicking on the
-Get started button to create account and Already have an account to login existing account.
+Get started button to create account(input random name and email address as no name and email address are been
+stored) and Already have an account to login existing account.
 
 #HOW MAKE TRANSFER
 On the home screen click on the transfer widget, on tansfer bottom modal sheet load up enter account number and 
