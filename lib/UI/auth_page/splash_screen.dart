@@ -86,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen>
                   quarterTurns: 1,
                   child: Center(
                     child: Text(
-                      'nance.',
+                      'Veegil.',
                       style: TextStyle(
                           color: Colors.amber[800],
                           letterSpacing: 1.0,
