@@ -1,7 +1,7 @@
 
 ## Henry Adebayo
 
-## Veegil Banking App.
+## Nance Banking App.
 
 This is a Banking App that enables user 
 - Create account
