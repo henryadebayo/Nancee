@@ -8,8 +8,8 @@ import 'Blocs/auth_bloc/signIn_bloc/sign_in_bloc_bloc.dart';
 import 'Blocs/auth_bloc/signUp_bloc/signup_bloc_bloc.dart';
 import 'Blocs/users_and_account_bloc/users_and_account_bloc.dart';
 import 'Providers/wallet_providers.dart';
-import 'Route_helper/route_manager.dart';
 import 'UI/auth_page/splash_screen.dart';
+import 'presentation/Route_helper/route_manager.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nannce/UI/bottom_navigation_page/bottom_navigation_screen.dart';
 
-import '../UI/auth_page/sign_in_screen.dart';
-import '../UI/auth_page/sign_up_screen.dart';
+import '../../UI/auth_page/sign_in_screen.dart';
+import '../../UI/auth_page/sign_up_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
